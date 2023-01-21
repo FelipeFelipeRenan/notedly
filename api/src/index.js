@@ -1,10 +1,15 @@
-const { ApolloServer, gql } = require('apollo-server-express')
-
 const express = require('express')
 
-const app = express()
+const { ApolloServer, gql } = require('apollo-server-express')
+
+require('dotenv').config()
+
+const db = require('./db')
 
 const port = process.env.PORT || 4000
+
+const DB_HOST = process.env.DB_HOST;
+
 
 let notes = [
     { id: '1', content: 'This is a note', author: "Adam Scott" },
@@ -18,16 +23,16 @@ const typeDefs = gql `
         id: ID!
         content: String!
         author: String!
-
+        
     }
-
-
+    
+    
     type Query {
         hello: String
         notes: [Note!]!
         note(id:ID!): Note!
     }
-
+    
     type Mutation{
         newNote(content: String!): Note!
     }
@@ -57,6 +62,11 @@ const resolvers = {
 
     }
 }
+
+const app = express()
+
+//Conectando ao banco de dados
+db.connect(DB_HOST)
 
 // Setup do Apollo Server
 const server = new ApolloServer({ typeDefs, resolvers })
