@@ -8,15 +8,15 @@ const db = require('./db')
 
 const models = require('./models')
 
-const port = process.env.PORT || 4000
-
-const DB_HOST = process.env.DB_HOST;
-
 // Construir um schema, usando a linguagem de schema do GraphQL
 const typeDefs = require('./schema')
 
 // Funçoes resolver para os campos do schema criado anteriormente
 const resolvers = require('./resolvers')
+
+const DB_HOST = process.env.DB_HOST;
+
+const port = process.env.PORT || 4000
 
 const app = express()
 
