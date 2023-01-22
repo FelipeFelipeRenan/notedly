@@ -16,28 +16,7 @@ const DB_HOST = process.env.DB_HOST;
 const typeDefs = require('./schema')
 
 // Funçoes resolver para os campos do schema criado anteriormente
-const resolvers = {
-    Query: {
-        hello: () => 'Hello world',
-        notes: async() => {
-            return await models.Note.find();
-        },
-        note: async(parent, args) => {
-            return await models.Note.findById(args.id);
-        }
-
-    },
-
-    Mutation: {
-        newNote: async(parent, args) => {
-            return await models.Note.create({
-                content: args.content,
-                author: 'Adam Scott'
-            })
-        }
-
-    }
-}
+const resolvers = require('./resolvers')
 
 const app = express()
 
@@ -45,7 +24,13 @@ const app = express()
 db.connect(DB_HOST)
 
 // Setup do Apollo Server
-const server = new ApolloServer({ typeDefs, resolvers })
+const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    context: () => {
+        return { models }
+    }
+})
 
 // Aplicando a Middleware do Apollo GraphQL e pondo o caminho para /api
 server.applyMiddleware({ app, path: '/api' })
