@@ -13,7 +13,7 @@ const noteSchema = new mongoose.Schema({
     }
 
 }, {
-    timestamp: true
+    timestamps: true
 });
 
 // Definindo o modelo de Nota com o Schema
