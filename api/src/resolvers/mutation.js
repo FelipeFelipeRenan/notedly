@@ -6,7 +6,8 @@ const {
 } = require('apollo-server-express');
 require('dotenv').config();
 
-const gravatar = require('../util/gravatar')
+const gravatar = require('../util/gravatar');
+const passport = require('passport');
 
 
 module.exports = {
@@ -35,5 +36,28 @@ module.exports = {
         }, {
             new: true
         })
+    },
+
+    singUp: async(parent, { username, email, password }, { models }) => {
+        // Normalizando eemail
+        email = email.trim().toLowerCase();
+        // passando a hash na senha
+        const hashed = await bcrypt.hash(password, 10);
+        // Criando a URL para o Gravatar
+        const avatar = gravatar(email);
+
+        try {
+            const user = await models.User.create({
+                username,
+                email,
+                avatar,
+                password: hashed
+            })
+        } catch (err) {
+
+        }
+
+
     }
+
 }
