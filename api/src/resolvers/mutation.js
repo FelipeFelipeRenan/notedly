@@ -8,6 +8,7 @@ require('dotenv').config();
 
 const gravatar = require('../util/gravatar');
 const passport = require('passport');
+const { models } = require('mongoose');
 
 
 module.exports = {
@@ -38,7 +39,7 @@ module.exports = {
         })
     },
 
-    singUp: async(parent, { username, email, password }, { models }) => {
+    signUp: async(parent, { username, email, password }, { models }) => {
         // Normalizando eemail
         email = email.trim().toLowerCase();
         // passando a hash na senha
@@ -48,16 +49,40 @@ module.exports = {
 
         try {
             const user = await models.User.create({
-                username,
-                email,
-                avatar,
-                password: hashed
-            })
+                    username,
+                    email,
+                    avatar,
+                    password: hashed
+                })
+                // Criar e retornar um token JWT
+            return jwt.sign({ id: user._id }, process.env.JWT_SECRET)
         } catch (err) {
-
+            console.log(err)
+            throw new Error('Error creating account');
         }
 
 
+    },
+
+    signIn: async(parent, { username, email, password }, { models }) => {
+        if (email) {
+            // Normalizando email
+            email = email.trim().toLowerCase()
+        }
+        const user = await models.User.findOne({
+            $or: [{ email, username }]
+        });
+
+        if (!user) {
+            throw new AuthenticationError('Error signing in');
+        }
+        // Erro se as senhas forem diferentes
+        const valid = await bcrypt.compare(password, user.password);
+        if (!valid) {
+            throw new AuthenticationError('Error signing in');
+        }
+
+        return jwt.sign({ id: user._id }, process.env.JWT_SECRET)
     }
 
 }
