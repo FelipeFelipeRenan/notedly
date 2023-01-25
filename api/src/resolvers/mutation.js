@@ -110,6 +110,48 @@ module.exports = {
         }
 
         return jwt.sign({ id: user._id }, process.env.JWT_SECRET)
+    },
+
+    toggleFavorite: async(parent, { id }, { models, user }) => {
+
+        if (!user) {
+            throw AuthenticationError();
+        }
+
+        // Checar se o usuario ja favoritou a nota
+        let noteCheck = await models.Note.findById(id);
+        const hasUser = noteCheck.favoritedBy.indexOf(user.id);
+        // Se o usuario exisir na lista
+        // retire ele da lista de favoritos e reduza o favoriteCount em 1
+        if (hasUser >= 0) {
+            return await models.Note.findByIdAndUpdate(
+                id, {
+                    $pull: {
+                        favoritedBy: mongoose.Types.ObjectId(user.id)
+                    },
+                    $inc: {
+                        favoriteCount: -1
+                    }
+                }, {
+                    new: true
+                }
+            )
+        } else {
+            // Se o usuario nao existir na lista
+            // adicione-o e incremente o favoriteCount em 1
+            return await models.Note.findByIdAndUpdate(
+                id, {
+                    $push: {
+                        favoritedBy: mongoose.Types.ObjectId(user.id)
+                    },
+                    $inc: {
+                        favoriteCount: 1
+                    }
+                }, {
+                    new: true
+                }
+            )
+        }
     }
 
 }
