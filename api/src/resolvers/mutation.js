@@ -26,9 +26,18 @@ module.exports = {
             author: mongoose.Types.ObjectId(user.id)
         });
     },
-    deleteNote: async(parent, { id }, { models }) => {
+    deleteNote: async(parent, { id }, { models, user }) => {
+        if (!user) {
+            throw new AuthenticationError('You must be signed in to delete a note')
+
+        }
+        const note = await models.Note.findById(id)
+            // Lança um forbidden error se o usuario atual for diferente do dono da nota
+        if (note && String(note.author) !== user.id) {
+            throw new ForbiddenError('You don\'t have permission to delete the note')
+        }
         try {
-            await models.Note.findOneAndRemove({ _id: id });
+            await note.remove();
             return true;
         } catch (err) {
             return false
