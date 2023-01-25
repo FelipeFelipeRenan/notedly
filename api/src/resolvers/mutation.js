@@ -6,16 +6,24 @@ const {
 } = require('apollo-server-express');
 require('dotenv').config();
 
+
 const gravatar = require('../util/gravatar');
 const passport = require('passport');
 const { models } = require('mongoose');
+const mongoose = require('mongoose')
 
 
 module.exports = {
-    newNote: async(parent, args, { models }) => {
+    newNote: async(parent, args, { models, user }) => {
+        if (!user) {
+            throw new AuthenticationError('You must be signed in to create a note')
+
+        }
+
         return await models.Note.create({
             content: args.content,
-            author: 'Adam Scott'
+            // referenciando o id do autor no mongo
+            author: mongoose.Types.ObjectId(user.id)
         });
     },
     deleteNote: async(parent, { id }, { models }) => {
