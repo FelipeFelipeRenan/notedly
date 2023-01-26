@@ -1,5 +1,9 @@
 const express = require('express')
 
+const helmet = require('helmet');
+
+const cors = require('cors');
+
 const { ApolloServer } = require('apollo-server-express')
 
 require('dotenv').config()
@@ -22,7 +26,10 @@ const port = process.env.PORT || 4000
 
 const app = express()
 
-//Conectando ao banco de dados
+app.use(helmet())
+
+app.use(cors())
+    //Conectando ao banco de dados
 db.connect(DB_HOST)
 
 // Pegando a informação do usuario de um JWT
