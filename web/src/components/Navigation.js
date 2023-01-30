@@ -7,12 +7,13 @@ export default Navigation = () =>{
             <ul>
                 <li>
                     <Link to="/">
-                        <span aria-hidden="true" role="img">
+                        <span aria-hidden="true" role="img">🏠
                         </span>Home</Link>
                 </li>
                 <li>
                     <Link to="/mynotes">
                         <span aria-hidden="true" role="img">
+                        📓
                             </span>
                             My Notes
                             </Link>
@@ -20,8 +21,10 @@ export default Navigation = () =>{
                 <li>
                     <Link to="/favorites">
                         <span aria-hidden="true" role="img">
+                        🌟
 
                         </span>Favorites</Link>
+              
                 </li>
             </ul>
         </nav>

@@ -6,8 +6,7 @@ import Navigation from "../components/Navigation"
 export default Home = () =>{
     return(
         <div>
-            <Header />
-            <Navigation />
+        
             <p>This is the home page</p>
  
      
