@@ -33,7 +33,7 @@ export default Home = () =>{
     
     return(
         <div>
-            console.log(data);
+           { console.log(data)}
             The data loaded!
 
         </div>
