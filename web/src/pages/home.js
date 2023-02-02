@@ -33,9 +33,11 @@ export default Home = () =>{
     
     return(
         <div>
-           { console.log(data)}
-            The data loaded!
-
+            {data.noteFeed.notes.map(note =>{
+                <div key={note.id}>
+                    {note.author.username}
+                </div>
+            })}
         </div>
     )
 }
