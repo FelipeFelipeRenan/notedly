@@ -30,23 +30,22 @@ export default Note = ({note}) =>{
         <StyledNote>
             <MetaData>
                 <MetaInfo>
-            <img src={note.author.avatar} 
-            alt={`${note.author.username} avatar`} 
-            height="50px"
-            />
-            </MetaInfo>
-            <MetaInfo>
-            <em>By</em>{note.author.username}<br/> 
-            {format(note.createdAt, 'DD MMM YYYY')}
-            </MetaInfo>
-            <UserActions>
+                    <img src={note.author.avatar} 
+                    alt={`${note.author.username} avatar`} 
+                    height="50px"
+                    />
+                </MetaInfo>
+                <MetaInfo>
+                    <em>By</em>{note.author.username}<br/> 
+                    {format(note.createdAt, 'DD MMM YYYY')}
+                </MetaInfo>
+                <UserActions>
 
-             <em>Favorites:</em>{note.favoriteCount}
+                    <em>Favorites:</em>{note.favoriteCount}
 
-            </UserActions>
+                </UserActions>
             </MetaData>
             <ReactMarkdown source={note.content} />
-
         </StyledNote>
     )
 }
