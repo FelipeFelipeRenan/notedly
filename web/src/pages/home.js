@@ -31,7 +31,8 @@ export default Home = () =>{
 
     const {data, loading, error, fetchMore} = useQuery(GET_NOTES)
     
-    loading?<p>Loading!</p>:<p>Error!</p>;
+    if(loading) return <p>Loading!</p>
+    if(error) return <p>Error!</p>;
     
     return(
         <>
