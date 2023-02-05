@@ -48,6 +48,8 @@ export default SignUp = props =>{
     const [signUp,{loading, error}] = useMutation(SIGNUP_USER, {
         onCompleted: data =>{
             console.log(data.signUp);
+            localStorage.setItem('token', data.signUp)
+            props.history.push('/')
         }
     })
 
