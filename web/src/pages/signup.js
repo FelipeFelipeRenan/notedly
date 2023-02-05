@@ -1,4 +1,27 @@
 import React, { useEffect } from "react";
+import styled from "styled-components";
+import Button from "../components/Button";
+
+const Wrapper = styled.div`
+    border: 1px solid #ff5f4f0
+    max-width: 500px;
+    padding: 1em;
+    margin: 0 auto;
+`
+const Form = styled.form`
+    label,
+    input{
+        display: block;
+        line-height: 2em;
+    }
+
+    input {
+        width: 100%;
+        margin-bottom: 1em;
+    }
+
+`
+
 
 export default SignUp = props =>{
     useEffect(() =>{
@@ -8,8 +31,9 @@ export default SignUp = props =>{
     })
 
     return(
-        <div>
-            <form>
+        <Wrapper>
+            <h2>Sign Up</h2>
+            <Form>
                 <label htmlFor="username">Username:</label>
                 <input 
                     required
@@ -33,9 +57,9 @@ export default SignUp = props =>{
                     name="password" 
                     placeholder="Password"
                 />
-                <button type="submit">Submit</button>
-            </form>
-        </div>
+                <Button type="submit">Submit</Button>
+            </Form>
+        </Wrapper>
     )
 
 }
