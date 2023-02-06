@@ -1,7 +1,14 @@
 import React from "react";
 import logo from '../img/logo.svg'
 import styled from "styled-components";
+import { gql } from "@apollo/client";
+import { Link } from "react-router-dom";
 
+const IS_LOGGED_IN = gql`
+    {
+        isLoggedIn @client
+    }
+`
 const HeaderBar = styled.header`
     width: 100%;
     padding: 0.5em 1em;
@@ -18,14 +25,27 @@ const LogoText = styled.h1`
     margin: 0;
     padding: 0;
     display: inline;
-
 `
 
-export default Header = () =>{
+const UserState = styled.div`
+        margin-left: auto;
+    `
+
+export default Header = props =>{
     return (
         <HeaderBar>
             <img src={logo} alt="Notedly Logo" height="40"/>
             <LogoText>Notedly</LogoText>
+            <HeaderBar>
+                {data.isLoggedIn? (
+                    <p>Log Out</p>
+                ):(
+                    <p>
+                        <Link to={'/signin'}>Sign In</Link>
+                        <Link to={'/signin'}>Sign Up</Link>
+                    </p>
+                )}
+            </HeaderBar>
         </HeaderBar>
     )
 }
