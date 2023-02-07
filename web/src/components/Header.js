@@ -2,7 +2,8 @@ import React from "react";
 import logo from '../img/logo.svg'
 import styled from "styled-components";
 import { gql } from "@apollo/client";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import ButtonAsLink from "./ButtonAsLink";
 
 const IS_LOGGED_IN = gql`
     {
@@ -31,17 +32,17 @@ const UserState = styled.div`
         margin-left: auto;
     `
 
-export default Header = props =>{
+const Header = props =>{
     return (
         <HeaderBar>
             <img src={logo} alt="Notedly Logo" height="40"/>
             <LogoText>Notedly</LogoText>
             <HeaderBar>
                 {data.isLoggedIn? (
-                    <p>Log Out</p>
+                    <ButtonAsLink>Log Out</ButtonAsLink>
                 ):(
                     <p>
-                        <Link to={'/signin'}>Sign In</Link>
+                        <Link to={'/signin'}>Sign In</Link> or{' '}
                         <Link to={'/signin'}>Sign Up</Link>
                     </p>
                 )}
@@ -49,3 +50,5 @@ export default Header = props =>{
         </HeaderBar>
     )
 }
+
+export default withRouter(Header)
