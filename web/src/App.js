@@ -37,6 +37,7 @@ const data = {
     isLoggedIn : !!localStorage.getItem('token')
 };
 
+client.onResetStore(() => cache.writeData({data}))
 cache.writeData({data})
 
 const App = () =>{

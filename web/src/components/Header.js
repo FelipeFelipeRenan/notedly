@@ -1,7 +1,7 @@
 import React from "react";
 import logo from '../img/logo.svg'
 import styled from "styled-components";
-import { gql } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 import { Link, withRouter } from "react-router-dom";
 import ButtonAsLink from "./ButtonAsLink";
 
@@ -33,10 +33,22 @@ const UserState = styled.div`
     `
 
 const Header = props =>{
+
+    const {data, client} = useQuery(IS_LOGGED_IN);
+
     return (
         <HeaderBar>
             <img src={logo} alt="Notedly Logo" height="40"/>
-            <LogoText>Notedly</LogoText>
+            <LogoText
+                onClick={() => {
+                    localStorage.removeItem('token')
+                    client.resetStore()
+                    client.writeData({data:{isLoggedIn: false}})
+                    props.history.push('/')
+                }}
+            >
+                Notedly
+            </LogoText>
             <HeaderBar>
                 {data.isLoggedIn? (
                     <ButtonAsLink>Log Out</ButtonAsLink>
