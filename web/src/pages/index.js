@@ -6,6 +6,7 @@ import Favorites from "./favorites";
 import NotePage from "./note"
 import Layout from "../components/Layout";
 import SignUp from "./signup";
+import SignIn from "./signin";
 
 export default Pages = props =>{
     return(
@@ -16,6 +17,7 @@ export default Pages = props =>{
                 <Route path="/favorites" component={Favorites}/>
                 <Route path="/note/:id" component={NotePage}/>
                 <Route path="/signup" component={SignUp} />
+                <Route path="/signin" component={SignIn} />
             </Layout>
         </Router>
     )
