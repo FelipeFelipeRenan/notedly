@@ -38,28 +38,33 @@ const Header = props =>{
 
     return (
         <HeaderBar>
-            <img src={logo} alt="Notedly Logo" height="40"/>
-            <LogoText
-                onClick={() => {
-                    localStorage.removeItem('token')
-                    client.resetStore()
-                    client.writeData({data:{isLoggedIn: false}})
-                    props.history.push('/')
-                }}
+        <img src={logo} alt="Notedly Logo" height="40" />
+        <LogoText>Notedly</LogoText>
+        {/* If logged in display a log out link, else display sign in options */}
+        <UserState>
+          {data.isLoggedIn ? (
+            <ButtonAsLink
+              onClick={() => {
+                // remove the token
+                localStorage.removeItem('token');
+                // clear the application's cache
+                client.resetStore();
+                // update local state
+                client.writeData({ data: { isLoggedIn: false } });
+                // redirect the user to the homepage
+                props.history.push('/');
+              }}
             >
-                Notedly
-            </LogoText>
-            <HeaderBar>
-                {data.isLoggedIn? (
-                    <ButtonAsLink>Log Out</ButtonAsLink>
-                ):(
-                    <p>
-                        <Link to={'/signin'}>Sign In</Link> or{' '}
-                        <Link to={'/signin'}>Sign Up</Link>
-                    </p>
-                )}
-            </HeaderBar>
-        </HeaderBar>
+              Logout
+            </ButtonAsLink>
+          ) : (
+            <p>
+              <Link to={'/signin'}>Sign In</Link> or{' '}
+              <Link to={'/signup'}>Sign Up</Link>
+            </p>
+          )}
+        </UserState>
+      </HeaderBar>
     )
 }
 
