@@ -57,7 +57,7 @@ export default SignUp = props =>{
     
     return(
         <>
-            <UserForm action={signUp} formType="signUp" />
+            <UserForm action={signUp} formType="signup" />
             {loading && <p>Loading...</p>}
             {error && <p>Error creating a account!</p>}
         </>
