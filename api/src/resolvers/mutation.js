@@ -97,7 +97,7 @@ module.exports = {
             email = email.trim().toLowerCase()
         }
         const user = await models.User.findOne({
-            $or: [{ email, username }]
+            $or: [{ email},{ username }]
         });
 
         if (!user) {
