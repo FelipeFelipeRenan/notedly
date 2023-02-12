@@ -101,12 +101,12 @@ module.exports = {
         });
 
         if (!user) {
-            throw new AuthenticationError('Error signing in');
+            throw new AuthenticationError('Error signing in, no such user in our database');
         }
         // Erro se as senhas forem diferentes
         const valid = await bcrypt.compare(password, user.password);
         if (!valid) {
-            throw new AuthenticationError('Error signing in');
+            throw new AuthenticationError('Error signing in, invalid password');
         }
 
         return jwt.sign({ id: user._id }, process.env.JWT_SECRET)
