@@ -66,7 +66,8 @@ export default Navigation = () =>{
               
                 </li>
                 <li>
-                    <Link to="/new">New</Link>
+                    <Link to="/new"><span aria-hidden="true" role="img">
+                        🆕 New</span></Link>
                 </li>
             </NavList>
         </Nav>
