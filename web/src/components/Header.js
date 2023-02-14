@@ -1,15 +1,11 @@
 import React from "react";
 import logo from '../img/logo.svg'
 import styled from "styled-components";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { Link, withRouter } from "react-router-dom";
 import ButtonAsLink from "./ButtonAsLink";
+import { IS_LOGGED_IN } from "../gql/query";
 
-const IS_LOGGED_IN = gql`
-    {
-        isLoggedIn @client
-    }
-`
 const HeaderBar = styled.header`
     width: 100%;
     padding: 0.5em 1em;

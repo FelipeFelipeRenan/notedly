@@ -65,6 +65,9 @@ export default Navigation = () =>{
                         </span>Favorites</Link>
               
                 </li>
+                <li>
+                    <Link to="/new">New</Link>
+                </li>
             </NavList>
         </Nav>
     )
